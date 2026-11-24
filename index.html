@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Compare what a product really costs, from the shelf to your doorstep.">
+<title>Deal Decoder — Compare the real cost</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" type="module"></script>
+</head>
+<body>
+<header><div class="wrap mast"><a href="./" class="brand"><b aria-hidden="true">D</b> Deal Decoder</a><a class="quiet" href="#method">How totals work</a></div></header>
+<main class="wrap">
+<section class="hero">
+<div><p class="kicker">LOCAL PICKUP + ONLINE DELIVERY</p><h1>The price tag<br>is only <em>half of it.</em></h1><p>Compare the cost of getting a product home, whether you pick it up or have it delivered.</p></div>
+<div class="receipt" aria-label="Example calculation"><div>THE REAL COST <span>EXAMPLE</span></div><p>Shelf price <b>$39.00</b></p><p>Round-trip travel <b>+$6.00</b></p><strong>Pickup total <b>$45.00</b></strong></div>
+</section>
+<section class="panel search" aria-labelledby="search-title">
+<h2 id="search-title">Find a product</h2>
+<form id="search">
+<label>Product<input name="product" placeholder="e.g. AirPods Pro 2, 1 kg basmati rice" maxlength="140" required></label>
+<label>Starting location<input name="location" placeholder="City or postal code, Canada" maxlength="110" required></label>
+<button class="primary">Find offers</button>
+</form>
+<p class="muted" id="search-status" role="status">Use a model number, size, or pack count to find the same item across stores.</p>
+<div class="links" id="links" hidden></div>
+</section>
+<section class="panel" aria-labelledby="compare-title">
+<div class="split"><div><h2 id="compare-title">Compare offers</h2><p class="muted" id="mode">Add prices you find or try a worked example.</p></div><div class="buttons"><button id="sample">Try example</button><button id="add" class="primary">+ Add offer</button></div></div>
+<div class="settings">
+<label>Rank offers by<select id="sort"><option value="cost">Lowest total cost</option><option value="value">Cost + pickup time</option><option value="trip">Shortest pickup trip</option></select></label>
+<label>Pickup travel cost ($/km)<input id="rate" type="number" min="0" max="100" step=".01" value=".45"></label>
+<label>Value of pickup time ($/hour)<input id="time-rate" type="number" min="0" max="500" step=".01" value="15"></label>
+</div>
+<div class="buttons filters" aria-label="Offer type"><button data-type="all" aria-pressed="true">All offers</button><button data-type="pickup" aria-pressed="false">Nearby pickup</button><button data-type="online" aria-pressed="false">Online delivery</button></div>
+<div id="offers" aria-live="polite"></div>
+</section>
+<details id="method"><summary>How totals work</summary><p>Pickup adds round-trip distance × your cost per kilometre to the item price, plus any fixed costs such as parking or transit fare. For transit, set the kilometre rate to zero and enter the total fare as a fixed cost. Online delivery adds shipping and any fees you enter. Enter tax in fees if you want it included. Amounts are in CAD.</p><p>The optional time ranking adds the value of time you spend travelling. Delivery ETAs are shown separately. Unavailable items and offers with unknown stock or missing costs remain visible, but are excluded from the ranked picks.</p></details>
+<footer>Deal Decoder <span>CAD · Manually added offers stay in this browser</span></footer>
+</main>
+<dialog id="editor" aria-labelledby="editor-title"><form id="offer-form">
+<div class="split"><h2 id="editor-title">Add offer</h2><button type="button" id="close" aria-label="Close">×</button></div>
+<div class="fields">
+<label>Channel<select name="type"><option value="pickup">Nearby pickup</option><option value="online">Online delivery</option></select></label>
+<label>Stock<select name="stock"><option value="in">In stock</option><option value="unknown">Unverified</option><option value="out">Out of stock</option></select></label>
+<label>Retailer<input name="store" required maxlength="100"></label>
+<label>Item price (CAD)<input name="price" type="number" required min="0" max="1000000" step=".01"></label>
+<label class="wide">Listing URL <small>(optional)</small><input name="url" type="url" placeholder="https://"></label>
+<div class="fields wide" id="pickup-fields">
+<label class="wide">Store address or branch<input name="address" maxlength="200" placeholder="e.g. 123 King St, Waterloo"></label>
+<a id="route" class="wide" target="_blank" rel="noopener noreferrer">Check route in Maps</a>
+<label>One-way distance (km)<input name="km" type="number" min="0" max="3000" step=".1"></label>
+<label>One-way travel (min)<input name="minutes" type="number" min="0" max="6000" step="1"></label>
+</div>
+<div class="fields wide" id="online-fields" hidden>
+<label>Shipping (CAD)<input name="shipping" type="number" min="0" max="1000000" step=".01" placeholder="0 for free shipping"></label>
+<label>Delivery estimate<input name="eta" maxlength="80" placeholder="e.g. 2–4 business days"></label>
+</div>
+<label class="wide">Other fees (CAD)<input name="fees" type="number" min="0" max="1000000" step=".01" value="0"></label>
+</div>
+<div class="buttons form-end"><button id="remove" type="button" hidden>Remove offer</button><button class="primary">Save offer</button></div>
+</form></dialog>
+</body>
+</html>
